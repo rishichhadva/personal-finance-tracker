@@ -35,39 +35,45 @@ def navbar():
         st.rerun()
 
 # Login or Signup
+# Login or Signup UI (Compact version)
 if not st.session_state.user:
     st.title("💰 Personal Finance Tracker")
 
     if 'auth_mode' not in st.session_state:
         st.session_state.auth_mode = "Login"
 
-    login_col, signup_col = st.columns([1, 1])
-    with login_col:
-        if st.button("Login"):
+    # Login / Signup toggle buttons
+    btn_col1, btn_col2 = st.columns([1, 1])
+    with btn_col1:
+        if st.button("🔐 Login"):
             st.session_state.auth_mode = "Login"
-    with signup_col:
-        if st.button("Signup"):
+    with btn_col2:
+        if st.button("📝 Signup"):
             st.session_state.auth_mode = "Signup"
 
-    st.markdown(f"#### {st.session_state.auth_mode}")
+    st.markdown(f"### {st.session_state.auth_mode}")
 
-    email = st.text_input("Email")
-    password = st.text_input("Password", type="password")
+    # Small, centered input fields
+    center_col = st.columns([2, 1, 2])[1]
+    with center_col:
+        email = st.text_input("Email", key="email_input")
+        password = st.text_input("Password", type="password", key="pass_input")
 
-    if st.button("Submit"):
-        if st.session_state.auth_mode == "Signup":
-            if signup(email, password):
-                st.success("Signup successful. Please login.")
+        if st.button("Submit"):
+            if st.session_state.auth_mode == "Signup":
+                if signup(email, password):
+                    st.success("Signup successful. Please login.")
+                else:
+                    st.error("Signup failed.")
             else:
-                st.error("Signup failed.")
-        else:
-            user = login(email, password)
-            if user:
-                st.session_state.user = user
-                st.success("Login successful!")
-                st.rerun()
-            else:
-                st.error("Login failed.")
+                user = login(email, password)
+                if user:
+                    st.session_state.user = user
+                    st.success("Login successful!")
+                    st.rerun()
+                else:
+                    st.error("Login failed.")
+
 
 
 
