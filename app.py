@@ -18,12 +18,13 @@ def navbar():
         """
         <style>
         .navbar {
-            background-color: #f0f2f6;
+            background-color: #052542;
             padding: 10px 30px;
             border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: white;
         }
         .navbar h2 {
             margin: 0;
