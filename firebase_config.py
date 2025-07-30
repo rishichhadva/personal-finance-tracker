@@ -1,14 +1,13 @@
 import pyrebase
 
 firebaseConfig = {
-    "apiKey": "AIzaSyDbVxnX-JyM6LrfZn2Sj_IEZRC1GYuP-sk",
-    "authDomain": "personal-finance-tracker-rishi.firebaseapp.com",
-    "databaseURL": "https://personal-finance-tracker-rishi-default-rtdb.firebaseio.com",
-    "projectId": "personal-finance-tracker-rishi",
-    "storageBucket": "personal-finance-tracker-rishi.appspot.com",
-    "messagingSenderId": "815652739645",
-    "appId": "1:815652739645:web:1d35eaac56dd0577dae854",
-    "measurementId": "G-7H1Y6B8F0V"
+  "apiKey": "AIzaSyBMstI80felHHuryt8Xr_ADqoSfwwfEdPU",
+  "authDomain": "personal-finance-tracker-rish.firebaseapp.com",
+  "databaseURL": "https://personal-finance-tracker-rish-default-rtdb.asia-southeast1.firebasedatabase.app",
+  "projectId": "personal-finance-tracker-rish",
+  "storageBucket": "personal-finance-tracker-rish.firebasestorage.app",
+  "messagingSenderId": "306440161735",
+  "appId": "1:306440161735:web:ffa5f921ba65b041b871e2"
 }
 
 firebase = pyrebase.initialize_app(firebaseConfig)
