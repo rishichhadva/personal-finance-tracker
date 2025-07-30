@@ -35,31 +35,26 @@ def navbar():
         st.rerun()
 
 # Login or Signup
+# Login or Signup
 if not st.session_state.user:
-    # Initialize auth_mode if not set
+    st.title("💰 Personal Finance Tracker")
+
     if "auth_mode" not in st.session_state:
         st.session_state.auth_mode = "Login"
 
-    # Title
-    st.title("💰 Personal Finance Tracker")
-
-    # Toggle buttons
-    col1, col2 = st.columns(2)
+    col1, col2, _ = st.columns([1, 1, 6])  # Tight layout, right-aligned
     with col1:
-        if st.button("Login"):
+        if st.button("🔐 Login"):
             st.session_state.auth_mode = "Login"
     with col2:
-        if st.button("Signup"):
+        if st.button("📝 Signup"):
             st.session_state.auth_mode = "Signup"
 
-    # Show which is active
-    st.subheader(f"{st.session_state.auth_mode} to your account")
+    st.markdown(f"### {st.session_state.auth_mode}")
 
-    # Inputs
     email = st.text_input("Email")
     password = st.text_input("Password", type="password")
 
-    # Submit
     if st.button("Submit"):
         if st.session_state.auth_mode == "Signup":
             if signup(email, password):
@@ -74,6 +69,7 @@ if not st.session_state.user:
                 st.rerun()
             else:
                 st.error("Login failed.")
+
 
 # Main UI
 else:
