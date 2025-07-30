@@ -3,7 +3,6 @@ import pandas as pd
 from auth import login, signup
 from tracker import add_transaction, get_all_transactions, delete_all_transactions, update_transaction, get_by_month
 from datetime import date
-from firebase_config import db
 
 
 st.set_page_config(page_title="Personal Finance Tracker", layout="wide")
@@ -52,32 +51,28 @@ if not st.session_state.user:
 
     st.markdown(f"### {st.session_state.auth_mode}")
 
-    # Email, Password, and Submit in a single row
-    email_col, pass_col, submit_col = st.columns([3, 3, 1])
-    with email_col:
-        email = st.text_input("Email", key="email_input")
-    with pass_col:
-        password = st.text_input("Password", type="password", key="pass_input")
-    with submit_col:
-        if st.button("Submit"):
-            if st.session_state.auth_mode == "Signup":
-                if signup(email, password):
-                    st.success("Signup successful. Please login.")
-                else:
-                    st.error("Signup failed.")
+    email = st.text_input("Email", key="email_input")
+    password = st.text_input("Password", type="password", key="pass_input")
+    if st.button("Submit"):
+        if st.session_state.auth_mode == "Signup":
+            if signup(email, password):
+                st.success("Signup successful. Please login.")
             else:
-                user = login(email, password)
-                if user:
-                    st.session_state.user = user
-                    st.success("Login successful!")
-                    st.rerun()
-                else:
-                    st.error("Login failed.")
+                st.error("Signup failed.")
+        else:
+            user = login(email, password)
+            if user:
+                st.session_state.user = user
+                st.success("Login successful!")
+                st.rerun()
+            else:
+                st.error("Login failed.")
 
 # Main UI
 else:
     navbar()
     nav = st.session_state.nav
+    user_email = st.session_state.user['email']
 
     if nav == "Home":
         st.header("➕ Add Transaction")
@@ -88,18 +83,22 @@ else:
             t_amount = st.number_input("Amount (₹)", min_value=0.0, step=0.5)
             submitted = st.form_submit_button("Add")
             if submitted:
-                add_transaction(str(t_date), t_category, t_type, t_amount)
+                add_transaction(user_email, str(t_date), t_category, t_type, t_amount)
                 st.success("Transaction added!")
 
         st.header("📊 All Transactions")
-        data = get_all_transactions()
-        df = pd.DataFrame(data, columns=["ID", "Date", "Category", "Type", "Amount"])
+        data = get_all_transactions(user_email)
+        df = pd.DataFrame(data, columns=["Email", "Date", "Category", "Type", "Amount"])
         st.dataframe(df, use_container_width=True)
+
+        if not df.empty:
+            csv = df.to_csv(index=False).encode('utf-8')
+            st.download_button("⬇️ Export as CSV", csv, "transactions.csv", "text/csv")
 
     elif nav == "Edit Transaction":
         st.header("✏️ Edit Transaction")
-        data = get_all_transactions()
-        df = pd.DataFrame(data, columns=["ID", "Date", "Category", "Type", "Amount"])
+        data = get_all_transactions(user_email)
+        df = pd.DataFrame(data, columns=["Email", "Date", "Category", "Type", "Amount"])
         if not df.empty:
             total_income = df[df["Type"] == "Income"]["Amount"].sum()
             total_expense = df[df["Type"] == "Expense"]["Amount"].sum()
@@ -133,7 +132,7 @@ else:
                 e_amount = st.number_input("Amount (₹)", value=float(selected_txn["Amount"]), step=0.5)
                 submit_edit = st.form_submit_button("Update Transaction")
                 if submit_edit:
-                    update_transaction(int(selected_txn["ID"]), str(e_date), e_category, e_type, e_amount)
+                    update_transaction(user_email, selected_txn["ID"], str(e_date), e_category, e_type, e_amount)
                     st.success("Transaction updated!")
                     st.rerun()
         else:
@@ -148,13 +147,13 @@ else:
             selected_year = st.selectbox("Year", list(range(2022, 2031)))
 
         if st.button("Show Transactions for Selected Month"):
-            month_data = get_by_month(selected_month, selected_year)
-            df_month = pd.DataFrame(month_data, columns=["ID", "Date", "Category", "Type", "Amount"])
+            month_data = get_by_month(user_email, selected_month, selected_year)
+            df_month = pd.DataFrame(month_data, columns=["Email", "Date", "Category", "Type", "Amount"])
             st.dataframe(df_month, use_container_width=True)
 
     elif nav == "Reset Data":
         st.header("🗑️ Reset All Data")
         if st.button("Delete All Transactions"):
-            delete_all_transactions()
+            delete_all_transactions(user_email)
             st.success("All transactions deleted!")
             st.rerun()
