@@ -110,3 +110,4 @@ else:
         delete_all_transactions()
         st.success("All transactions deleted!")
         st.rerun()
+
