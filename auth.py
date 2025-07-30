@@ -5,8 +5,9 @@ def signup(email, password):
         auth.create_user_with_email_and_password(email, password)
         return True
     except Exception as e:
-        print("Signup error:", e)
+        print("Signup error:", e)  # Show full error
         return False
+
 
 def login(email, password):
     try:
