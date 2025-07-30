@@ -83,6 +83,29 @@ else:
         st.header("✏️ Edit Transaction")
         data = get_all_transactions()
         df = pd.DataFrame(data, columns=["ID", "Date", "Category", "Type", "Amount"])
+        if not df.empty:
+            # Total Balance
+            total_income = df[df["Type"] == "Income"]["Amount"].sum()
+            total_expense = df[df["Type"] == "Expense"]["Amount"].sum()
+            balance = total_income - total_expense
+
+            col1, col2, col3 = st.columns(3)
+            col1.metric("💵 Total Income", f"₹{total_income:.2f}")
+            col2.metric("💸 Total Expense", f"₹{total_expense:.2f}")
+            col3.metric("🧾 Balance", f"₹{balance:.2f}")
+
+            # Pie Chart
+            pie_data = df.groupby("Type")["Amount"].sum().reset_index()
+            st.subheader("📈 Income vs Expense")
+            st.plotly_chart({
+                "data": [{
+                    "labels": pie_data["Type"],
+                    "values": pie_data["Amount"],
+                    "type": "pie"
+                }],
+                "layout": {"margin": dict(t=0, b=0, l=0, r=0)}
+            }, use_container_width=True)
+
         if len(df) > 0:
             df['Edit'] = df.index
             edit_row = st.selectbox("Select row to edit", df['Edit'])
