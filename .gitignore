@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+transactions.db
+*.pdf
+*.csv
+firebase_config.json
