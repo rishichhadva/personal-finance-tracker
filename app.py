@@ -14,52 +14,23 @@ if 'nav' not in st.session_state:
 
 # Navbar buttons
 def navbar():
-    st.markdown(
-        """
-        <style>
-        .navbar {
-            background-color: ##0c1119;
-            padding: 10px 30px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-            font-size: 38px;
-        }
-        .navbar h2 {
-            margin: 0;
-            font-size: 20px;
-        }
-        .nav-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        .nav-buttons button {
-            font-size: 16px;
-            padding: 6px 16px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+    st.title("💰 Personal Finance Tracker")
+    st.sidebar.header("📌 Navigation")
 
-    nav_col1, nav_col2 = st.columns([6, 4])
-    with nav_col1:
-        st.markdown("<div class='navbar'><h2>💰 Personal Finance Tracker</h2></div>", unsafe_allow_html=True)
+    if st.sidebar.button("🏠 Home"):
+        st.session_state.nav = "Home"
+    if st.sidebar.button("✏️ Edit Transaction"):
+        st.session_state.nav = "Edit Transaction"
+    if st.sidebar.button("📆 Filter by Month"):
+        st.session_state.nav = "Filter by Month"
+    if st.sidebar.button("🗑️ Reset Data"):
+        st.session_state.nav = "Reset Data"
 
-    with nav_col2:
-        st.markdown("<div class='nav-buttons'>", unsafe_allow_html=True)
-        nav1, nav2, nav3, nav4, nav5 = st.columns(5)
-        if nav1.button("Home"): st.session_state.nav = "Home"
-        if nav2.button("Edit"): st.session_state.nav = "Edit Transaction"
-        if nav3.button("Monthly"): st.session_state.nav = "Filter by Month"
-        if nav4.button("Reset"): st.session_state.nav = "Reset Data"
-        if nav5.button("Logout"):
-            st.session_state.user = None
-            st.session_state.nav = "Home"
-            st.rerun()
-        st.markdown("</div>", unsafe_allow_html=True)
+    st.sidebar.markdown("---")
+    if st.sidebar.button("🔓 Logout"):
+        st.session_state.user = None
+        st.session_state.nav = "Home"
+        st.rerun()
 
 # Login or Signup
 if not st.session_state.user:
