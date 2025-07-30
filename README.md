@@ -1,7 +1,7 @@
 # 💰 Personal Finance Tracker
 
 A simple, Streamlit-based web app to track your income and expenses. Features Firebase authentication, real-time data storage, and analytics.
-
+You can use it here: https://personal-finance-tracker-project.streamlit.app/
 ## 🔧 Features
 
 - 🔐 User Authentication (Login/Signup using Firebase)
