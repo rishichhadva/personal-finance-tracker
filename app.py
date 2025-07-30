@@ -37,7 +37,7 @@ def navbar():
 # Login or Signup
 if not st.session_state.user:
     st.title("💰 Personal Finance Tracker")
-    auth_choice = st.radio("Login / Signup", ["Login", "Signup"])
+    auth_choice = st.button("Login / Signup", ["Login", "Signup"])
     email = st.text_input("Email")
     password = st.text_input("Password", type="password")
 
