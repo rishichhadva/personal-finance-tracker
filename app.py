@@ -3,7 +3,7 @@ import pandas as pd
 from auth import login, signup
 from tracker import add_transaction, get_all_transactions, delete_all_transactions, update_transaction, get_by_month
 from datetime import date
-from firebase_config import auth, db
+from firebase_config import db
 
 
 st.set_page_config(page_title="Personal Finance Tracker", layout="wide")
