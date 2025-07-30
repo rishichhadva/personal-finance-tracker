@@ -35,7 +35,7 @@ if not st.session_state.logged_in:
                 st.success("Logged in successfully!")
                 st.session_state.logged_in = True
                 st.session_state.user_email = email
-                st.experimental_rerun()
+                st.rerun()
             else:
                 st.error("Invalid credentials.")
 
@@ -46,7 +46,7 @@ else:
     if st.sidebar.button("🚪 Logout"):
         st.session_state.logged_in = False
         st.session_state.user_email = ""
-        st.experimental_rerun()
+        st.rerun()
 
     st.title("📊 Personal Finance Tracker")
 
