@@ -35,7 +35,6 @@ def navbar():
         st.rerun()
 
 # Login or Signup
-# Login or Signup UI (Compact version)
 if not st.session_state.user:
     st.title("💰 Personal Finance Tracker")
 
@@ -53,12 +52,13 @@ if not st.session_state.user:
 
     st.markdown(f"### {st.session_state.auth_mode}")
 
-    # Small, centered input fields
-    center_col = st.columns([2, 1, 2])[1]
-    with center_col:
+    # Email, Password, and Submit in a single row
+    email_col, pass_col, submit_col = st.columns([3, 3, 1])
+    with email_col:
         email = st.text_input("Email", key="email_input")
+    with pass_col:
         password = st.text_input("Password", type="password", key="pass_input")
-
+    with submit_col:
         if st.button("Submit"):
             if st.session_state.auth_mode == "Signup":
                 if signup(email, password):
@@ -74,13 +74,9 @@ if not st.session_state.user:
                 else:
                     st.error("Login failed.")
 
-
-
-
 # Main UI
 else:
     navbar()
-
     nav = st.session_state.nav
 
     if nav == "Home":
@@ -105,7 +101,6 @@ else:
         data = get_all_transactions()
         df = pd.DataFrame(data, columns=["ID", "Date", "Category", "Type", "Amount"])
         if not df.empty:
-            # Total Balance
             total_income = df[df["Type"] == "Income"]["Amount"].sum()
             total_expense = df[df["Type"] == "Expense"]["Amount"].sum()
             balance = total_income - total_expense
@@ -115,7 +110,6 @@ else:
             col2.metric("💸 Total Expense", f"₹{total_expense:.2f}")
             col3.metric("🧾 Balance", f"₹{balance:.2f}")
 
-            # Pie Chart
             pie_data = df.groupby("Type")["Amount"].sum().reset_index()
             st.subheader("📈 Income vs Expense")
             st.plotly_chart({
