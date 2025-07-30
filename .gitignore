@@ -4,3 +4,5 @@ transactions.db
 *.pdf
 *.csv
 firebase_config.json
+.DS_Store
+.idea/
