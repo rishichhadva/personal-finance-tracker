@@ -7,4 +7,5 @@ firebase_config.json
 .DS_Store
 .idea/
 .env
-firebase_config.py
+
+
