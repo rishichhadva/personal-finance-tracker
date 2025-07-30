@@ -17,7 +17,7 @@ def navbar():
     st.title("💰 Personal Finance Tracker")
     st.sidebar.header("📌 Navigation")
 
-    if st.sidebar.selectbox("🏠 Home"):
+    if st.sidebar.button("🏠 Home"):
         st.session_state.nav = "Home"
     if st.sidebar.button("✏️ Edit Transaction"):
         st.session_state.nav = "Edit Transaction"
