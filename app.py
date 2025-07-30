@@ -25,7 +25,7 @@ def navbar():
             justify-content: space-between;
             align-items: center;
             color: white;
-            font-size: 18px;
+            font-size: 38px;
         }
         .navbar h2 {
             margin: 0;
