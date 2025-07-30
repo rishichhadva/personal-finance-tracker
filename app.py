@@ -5,6 +5,29 @@ from tracker import (
 )
 import pandas as pd
 import matplotlib.pyplot as plt
+from auth import login, signup
+
+st.title("🔐 Login to Personal Finance Tracker")
+
+choice = st.selectbox("Login or Sign Up?", ["Login", "Sign Up"])
+email = st.text_input("Email")
+password = st.text_input("Password", type="password")
+
+if choice == "Sign Up":
+    if st.button("Create Account"):
+        if signup(email, password):
+            st.success("Account created!")
+        else:
+            st.error("Error creating account.")
+
+if choice == "Login":
+    if st.button("Login"):
+        user = login(email, password)
+        if user:
+            st.success("Logged in successfully!")
+            # Show main app
+        else:
+            st.error("Invalid credentials.")
 
 st.set_page_config(page_title="Personal Finance Tracker", layout="centered")
 connect_db()
