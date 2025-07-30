@@ -18,7 +18,7 @@ def navbar():
         """
         <style>
         .navbar {
-            background-color: #052542;
+            background-color: #000033;
             padding: 10px 30px;
             border-radius: 8px;
             display: flex;
