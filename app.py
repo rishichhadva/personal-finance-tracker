@@ -14,40 +14,17 @@ if 'nav' not in st.session_state:
 
 # Navbar buttons
 def navbar():
-    st.sidebar.markdown("""
-        <style>
-        .nav-link {
-            padding: 8px 16px;
-            display: block;
-            text-decoration: none;
-            color: #ffffff;
-            border-radius: 4px;
-            margin-bottom: 4px;
-            transition: background-color 0.2s ease;
-        }
-        .nav-link:hover {
-            background-color: #5c5c5c;
-        }
-        .selected {
-            background-color: #333333;
-        }
-        </style>
-    """, unsafe_allow_html=True)
+    st.title("💰 Personal Finance Tracker")
+    st.sidebar.header("📌 Navigation")
 
-    st.sidebar.markdown("## 💼 Menu")
-
-    def link(label, target):
-        selected = "selected" if st.session_state.nav == target else ""
-        if st.sidebar.markdown(
-            f'<a href="#" class="nav-link {selected}" onclick="window.location.search=\'?nav={target}\'">{label}</a>',
-            unsafe_allow_html=True
-        ):
-            st.session_state.nav = target
-
-    link("🏠 Home", "Home")
-    link("✏️ Edit Transaction", "Edit Transaction")
-    link("📆 Filter by Month", "Filter by Month")
-    link("🗑️ Reset Data", "Reset Data")
+    if st.sidebar.selectbox("🏠 Home"):
+        st.session_state.nav = "Home"
+    if st.sidebar.button("✏️ Edit Transaction"):
+        st.session_state.nav = "Edit Transaction"
+    if st.sidebar.button("📆 Filter by Month"):
+        st.session_state.nav = "Filter by Month"
+    if st.sidebar.button("🗑️ Reset Data"):
+        st.session_state.nav = "Reset Data"
 
     st.sidebar.markdown("---")
     if st.sidebar.button("🔓 Logout"):
