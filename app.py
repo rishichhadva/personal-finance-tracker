@@ -11,7 +11,7 @@ if 'user' not in st.session_state:
 
 if not st.session_state.user:
     st.title("💰 Personal Finance Tracker")
-    auth_choice = st.radio("Login / Signup", ["Login", "Signup"])
+    auth_choice = st.selectbox("Login / Signup", ["Login", "Signup"])
 
     email = st.text_input("Email")
     password = st.text_input("Password", type="password")
@@ -31,16 +31,25 @@ if not st.session_state.user:
             else:
                 st.error("Login failed.")
 else:
+    # Sidebar Headers
+    st.sidebar.title("💼 Personal Finance Tracker")
+    st.sidebar.markdown("### Sections")
+    st.sidebar.markdown("- Add Transaction\n- View Transactions\n- Edit Transaction\n- Filter by Month\n- Reset Data")
+
+    # Properly styled Logout button
+    st.sidebar.markdown("---")
+    logout_clicked = st.sidebar.button("Logout", use_container_width=True)
+    if logout_clicked:
+        st.session_state.user = None
+        st.rerun()
+
     st.title("💰 Personal Finance Tracker")
     col1, col2 = st.columns([9, 1])
     with col1:
         st.markdown("## Dashboard")
-    with col2:
-        if st.button("Logout"):
-            st.session_state.user = None
-            st.rerun()
 
     st.markdown("---")
+
 
     st.subheader("➕ Add Transaction")
     with st.form("txn_form"):
