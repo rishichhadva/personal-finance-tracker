@@ -1,17 +1,14 @@
+import streamlit as st
 import pyrebase
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 firebaseConfig = {
-  "apiKey": os.getenv("API_KEY"),
-  "authDomain": os.getenv("AUTH_DOMAIN"),
-  "databaseURL": os.getenv("DATABASE_URL"),
-  "projectId": os.getenv("PROJECT_ID"),
-  "storageBucket": os.getenv("STORAGE_BUCKET"),
-  "messagingSenderId": os.getenv("MESSAGING_SENDER_ID"),
-  "appId": os.getenv("APP_ID")
+    "apiKey": st.secrets["API_KEY"],
+    "authDomain": st.secrets["AUTH_DOMAIN"],
+    "databaseURL": st.secrets["DATABASE_URL"],
+    "projectId": st.secrets["PROJECT_ID"],
+    "storageBucket": st.secrets["STORAGE_BUCKET"],
+    "messagingSenderId": st.secrets["MESSAGING_SENDER_ID"],
+    "appId": st.secrets["APP_ID"]
 }
 
 firebase = pyrebase.initialize_app(firebaseConfig)
